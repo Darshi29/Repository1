@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}
+Agri E Market
+{% endblock %}
+
+{% block body %}
+<!-- Main Store Body -->
+ <div class="row">
+        <div class="col-sm">
+          <h2>Your Block Chain Deatils</h2>
+          <table class="table table-sm">
+            <thead>
+              <tr>
+                <th scope="col">Block Index</th>
+                <th scope="col">Timestamp</th>
+                <th scope="col">Previous Hash</th>
+               <th scope="col">Transactions</th>
+                <th scope="col">Nonce</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for block in blockchain %}
+            <tr>
+                <td>{{ block[0] }}</td>
+                <td>{{ block[1] }}</td>
+                <td>{{ block[2] }}</td>
+                <td>{{ block[3] }}</td>
+                <td>{{ block[4] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+{% endblock %}

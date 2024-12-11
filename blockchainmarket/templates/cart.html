@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block title %}
+Agri E Markek
+{% endblock %}
+
+{% block body %}
+<!-- Main Store Body -->
+  <div aria-hidden="true">
+    <div>
+      <div>
+        <div>
+          <h5 class="modal-title" id="exampleModalLongTitle">Shopping Cart</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          </button>
+        </div>
+        <div>
+          <div id="shoppingCart">
+            <div class="container">
+              <div class="row">
+                <div class="col-sm">
+                  <table class="table table-sm">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Item</th>
+                        <th scope="col">samplename</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Unit Price</th>
+                        <th scope="col">Sub-Total</th>
+                        <th scope="col"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    <!-- For Each shirt -->
+                    {% if shopLen != 0 %}
+                    {% for i in range(shopLen) %}
+                      <tr>
+                        <th scope="row">{{ i + 1 }}</th>
+                        <td><img src="/static/img/{{ shoppingCart[i]["image"] }}" width="30px" alt="{{ shoppingCart[i]["samplename"] }}" /></td>
+                        <td>{{ shoppingCart[i]["samplename"] }}</td>
+                        <td><form action="/update/">
+                            <input type="hidden" name="id" value="{{shoppingCart[i]["id"]}}" />
+                            <input type="number" name="quantity" min="1" max="10" size="5" value="{{ shoppingCart[i]['SUM(qty)'] }}">
+                            <button type="submit" class="btn btn-warning checkout">Update</button>
+                          </form></td>
+                        <td>{{ 'Rs {:,.2f}'.format(shoppingCart[i]["price"]) }}</td>
+                        <td>{{ 'Rs {:,.2f}'.format(shoppingCart[i]['SUM(subTotal)']) }}</td>
+                        <td>
+                          <form action="/remove/" methods="GET">
+                            <input type="hidden" name="id" value="{{ shoppingCart[i]["id"] }}" />
+                            <button type="submit" class="btn btn-secondary btn-sm" id="removeFromCart">Remove</button>
+                          </form>
+                        </td>
+                      </tr>
+                    </tbody>
+                    {% endfor %}
+                    <tfoot>
+                      <tr>
+					  					<form class="form" method="post" >
+						  <table class="table table-sm">
+                    <thead>
+					<br><h1 align="center"> Payment Details</h1>
+                    </thead>
+                    <tbody>
+					<tr><td><label>Select Card Type</label></td><td><select name="ct" autofocus required >
+						  <option value="0">Visa</option>
+						  <option value="1">Master</option>
+						  <option value="2">Rupay</option>
+						  <option value="3">Other</option>
+						  </select></td></tr>
+						  <tr><td><label>Enter Card No</label></td><td><input type="text" name="cn" id="cn" placeholder="CARD NO" autofocus required ></td></tr>
+						  <tr><td><label>Enter CVV No</label></td><td><input type="text" name="cvv" id="cvv" placeholder="CVV NO" autofocus required ></td></tr>
+						  <tr><td><label>Validity</label></td><td><input type="text" name="val" id="val" placeholder="MM/YY" autofocus required ></td></tr>
+						  <tr><td><label>Amount</label></td><td><input type="text" name="amt" id="amt" placeholder="Amount" autofocus required ></td></tr>
+						  </tbody>
+						  </table>
+						  </form >
+                        <td colSpan="7">Total: {{ 'Rs {:,.2f}'.format(total) }}<br /><br />
+                          <div class="modal-footer">
+                            <a href="/"><button type="button" class="btn btn-primary checkout">Continue Shopping</button></a>
+                            <a href="/checkout/"><button type="button" class="btn btn-success checkout">Proceed to Checkout</button></a>
+                          </div>
+                        </td>
+                      </tr>
+                    </tfoot>
+                    {% else %}
+                      <tr>
+                        <td colSpan="7"><h3>Your cart is empty :\</h3></td>
+                      </tr>
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <td colSpan="7">Get some products now!<br />
+                          <div>
+                            <a href="/"><button type="button" class="btn btn-secondary" data-dismiss="modal">Continue Shopping</button></a>
+                          </div>
+                        </td>
+                      </tr>
+                    </tfoot>
+                    {% endif %}
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    </div>
+  </main>
+
+{% endblock %}
